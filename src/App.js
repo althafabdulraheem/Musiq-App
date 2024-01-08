@@ -1,49 +1,20 @@
-import React,{useEffect,useState} from 'react'
-import Player from './components/Player';
-import axios from 'axios';
+import React from 'react'
+import {Routes,Route,Navigate} from 'react-router';
 import './index.css';
-import Loader from './components/Loader';
-
-
-
+import Login from'./pages/Login';
+import Notfound from'./pages/Notfound';
+import Landing from'./pages/Landing';
+import AuthHook from './hooks/AuthHook';
 
 const App=()=>{
-
-  const[loader,setLoader]=useState(true)
-  const[data,setData]=useState([]);
-  useEffect(()=>{
-    fetch()
-  },
-  []);
-
-  async function fetch()
-{
-    try{
-        let Songdata=await axios.get('https://fakestoreapi.com/products/');
-        const {data}=Songdata;
-        if(data.length > 0)
-        {
-          setData(data)  
-          setLoader(false)
-
-        }
-       
-    }
-    catch(error)
-    {
-      console.log(error)
-
-    }
-}
-
-
-  
-  
-
-  return (<div className="App">
-    {loader&&<Loader/>}
-        {!loader&&<Player data={data}/>}
-  </div>)
+  const{getToken}=AuthHook();
+  let token=getToken();
+  return(<Routes>
+        <Route path="/login" element={token?<Navigate to='/' />:<Login/>}></Route>
+        <Route path='/' element={<Landing/>}></Route>
+        {/* <Route path="*" element={<Navigate to="/login" />}></Route> */}
+        <Route path="*" element={<Notfound/>}></Route>
+  </Routes>)
 }
 
 

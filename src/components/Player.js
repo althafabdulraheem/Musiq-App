@@ -1,14 +1,21 @@
-import React,{useState,useRef,useEffect,useMemo} from 'react'
+import React,{useState,useRef,useEffect,useMemo,useContext} from 'react'
 import Details  from './Details';
 import Control from './Control';
+import { UserName } from '../context/UserContext';
 
 
 const Player=({data})=>{
- 
-    //     let newData=[...data];
-    //    newData=newData.splice(0,2)
+    const {name,setName}=useContext(UserName);
     const newData=useMemo(()=>{ console.log("memo");return data.splice(0,2);},[data])
- 
+    
+  if(!name){
+   
+    let userData=localStorage.getItem('user');
+    if(userData)
+    {
+      setName(JSON.parse(userData).name)
+    }
+  }
   const[current,setCurrent]=useState(0);
   const [isPlaying,setPlaying]=useState(false);
   const[next,setNext]=useState(0)
@@ -95,14 +102,14 @@ const Player=({data})=>{
     return(
         
         <div className="my-player">
-          <audio src={`/music/${newData[current].id}.mp3`} ref={audio}>
+          <audio src={newData[current]?.song&&newData[current].song} ref={audio}>
 
             </audio>
-              <h4>Playing Now</h4>
+              <h4>{name?`Hi ${name}`:'Playing Now'}</h4>
                 <Details current={newData[current]}/>
                 <Control play={isPlaying} skipSong={skip} setPlay={setPlaying}/>
              <div className="next-title"></div>   
-            <p>Next song : {newData[next].title}</p>
+            <p>Next song : {newData[next].song_name}</p>
         </div>
     )
    

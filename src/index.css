@@ -25,6 +25,7 @@ body {
   border-radius: 16px;
   box-shadow: inset -6px -6px 12px rgba(0, 0, 0, 0.8),
     inset 6px 6px 12px rgba(255, 255, 255, 0.4);
+    max-width: 500px;
 }
 
 .my-player > h4 {
@@ -119,4 +120,32 @@ body {
   cursor: pointer;
   color: #888;
   font-size: 18px;
+}
+
+.logout-btn-wrapper
+{
+  display:none;
+  position: absolute;
+  top: 109px;
+  font-size: 32px;
+  left: 515px;
+  right: 50%;
+  width: 150px;
+  background: auto;
+  width: 252px;
+  height: 238px;
+  background: #313131ed;
+  border-radius: 50%;
+}
+
+.logout-btn{
+  
+  position: absolute;
+  left: 91px;
+  top: 86px;
+  transform: rotate(88deg);
+}
+
+.my-player--details:hover .logout-btn-wrapper{
+  display: block !important;
 }
