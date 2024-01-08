@@ -19,3 +19,11 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::post('/login-submit',[App\Http\Controllers\Api\AuthController::class,'login']);
+
+Route::group(['middleware'=>'auth:api'],function()
+{
+    Route::get('/get-songs',[App\Http\Controllers\Api\SongController::class,'getSongs']);
+    Route::post('/logout',[App\Http\Controllers\Api\AuthController::class,'logout']);
+   
+});
+
